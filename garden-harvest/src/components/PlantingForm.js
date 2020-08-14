@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from 'react-bootstrap';
 import './PlantingForm.css'
 import dashboardAPI from '../api/dashboardAPI.js'
@@ -24,8 +24,7 @@ export default function PlantingForm(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     const selectedSlot = slotOptions[slotIdx]
-    // TODO: The backend for Adding a PlantSlot needs to handle this data sent.
-    // dashboardAPI.sendPlantingChoice(pk, selectedSlot.id, selectedSlot.earliest_date)
+    dashboardAPI.sendPlantingChoice(pk, selectedSlot.id, selectedSlot.earliest_date)
     
     // For now easy/lazy way to refresh all components just to see updates.
     // TODO: Might replace this with a state setter func passed through props.
@@ -35,13 +34,13 @@ export default function PlantingForm(props) {
   let optionFields = slotOptions.map((option, i) => {
     let {location_description} = option
     let location = (location_description ? location_description : option.name)
-    return <Form.Check key={i} 
-              type='radio'
-              id='default-radio'
-              label={`${location} - ${option.earliest_date}`}
-              name="slot"
-              value={option.id}
-              onChange={() => onChange(i)}/>
+    return <Form.Check key={i}
+                       type='radio'
+                       id='default-radio'
+                       label={`${location} - ${new Date(option.earliest_date).toDateString()}`}
+                       name="slot"
+                       value={option.id}
+                       onChange={() => onChange(i)}/>
   })
 
   return(

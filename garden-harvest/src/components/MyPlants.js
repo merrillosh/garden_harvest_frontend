@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 import dashboardAPI from '../api/dashboardAPI.js'
 import PlantCard from './PlantCard'
 
@@ -14,7 +14,7 @@ export default function MyPlants() {
       })
   }, []);
 
-  let plants = myPlants.reverse().map((plant, i) => <PlantCard key={i} {...plant}/>);
+  let plants = myPlants.reverse().map((plant, i) => <PlantCard key={i} {...plant} canDelete={true}/>);
 
   if (plants.length === 0) {
     plants = <h4>You haven't added any plants to your garden yet.</h4>
